@@ -128,7 +128,8 @@ fn main() {
     let mot2_1 = ledc::LedcDriver::new(peripherals.ledc.channel2, timer.clone(), mot2_1).unwrap();
     let mot2_2 = ledc::LedcDriver::new(peripherals.ledc.channel3, timer, mot2_2).unwrap();
 
-    let motor_config = MotorConfig::new(100, 94, false, true);
+    // 100 & 94
+    let motor_config = MotorConfig::new(87, 79, false, true);
     let mut motors = Motors::new(motor_config).unwrap();
 
     let tx = motors.start(mot2_1, mot2_2, mot1_1, mot1_2).unwrap();
