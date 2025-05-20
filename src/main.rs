@@ -48,13 +48,13 @@ enum Color {
 impl Color {
     fn to_rgb(&self) -> RGB<u8> {
         match self {
-            Color::Blue => { RGB::new(0, 0, 128) },
-            Color::Red => { RGB::new(128, 0, 0) },
-            Color::Magenta => { RGB::new(128, 0, 128) },
-            Color::Green => { RGB::new(0, 128, 0) },
-            Color::Cyan => { RGB::new(0, 128, 128) },
-            Color::Yellow => { RGB::new(128, 128, 0) },
-            Color::Unknown => { RGB::new(0, 0, 0) },
+            Color::Blue => RGB::new(0, 0, 128),
+            Color::Red => RGB::new(128, 0, 0),
+            Color::Magenta => RGB::new(128, 0, 128),
+            Color::Green => RGB::new(0, 128, 0),
+            Color::Cyan => RGB::new(0, 128, 128),
+            Color::Yellow => RGB::new(128, 128, 0),
+            Color::Unknown => RGB::new(0, 0, 0),
         }
     }
 }
@@ -148,9 +148,9 @@ fn main() {
         let color = float_to_base_color(normalized);
 
         new_state = match color {
-            Color::Red => { MotorState::Stop },
-            Color::Magenta => { MotorState::Forward },
-            _ => { state },
+            Color::Red => MotorState::Stop,
+            Color::Magenta => MotorState::Forward,
+            _ => state,
         };
 
         if state != new_state {
@@ -158,8 +158,13 @@ fn main() {
             tx.send(state).unwrap();
         }
 
-        log::info!("Measurement: {:?}, normalized: {:?}, rgb: {:?}", m, normalized, color.to_rgb());
-        let rgb = [ color.to_rgb() ];
+        log::info!(
+            "Measurement: {:?}, normalized: {:?}, rgb: {:?}",
+            m,
+            normalized,
+            color.to_rgb()
+        );
+        let rgb = [color.to_rgb()];
         led.write(rgb).unwrap();
         delay.delay_ms(10);
     }
